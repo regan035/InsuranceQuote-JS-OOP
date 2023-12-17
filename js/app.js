@@ -102,7 +102,14 @@ class UI {
     <p>Level: ${insurance.level}</p>
     <p class = "total">Total: $ ${price}</p>
     `;
-    resultEl.appendChild(div);
+
+    // spinner gif
+    const spinner = document.querySelector("#loading img");
+    spinner.style.display = "block";
+    setTimeout(() => {
+      spinner.style.display = "none";
+      resultEl.appendChild(div);
+    }, 3000);
   }
 }
 // variables
@@ -130,6 +137,12 @@ const eventListeners = () => {
     if (make === "" || level === "" || year === "") {
       ui.displayError("Please fill out the form");
     } else {
+      //clear previous values
+      const previousResult = document.querySelector("#result div");
+      if (previousResult != null) {
+        previousResult.remove();
+      }
+      //new quote
       const insurance = new Insurance(make, year, level);
       const price = insurance.calculateQuote(insurance);
 
